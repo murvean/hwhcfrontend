@@ -1,0 +1,97 @@
+<div class="container">
+  <div class="container"> 
+    <div style="text-align: center;">
+      <h1 style="padding-top: 5%; padding-bottom: 5%;">ASSIGNMENT HELP SERVICE IN USA</h1>
+      <h4 class="text-muted">
+        <p class="text-dark">
+          Assignment Help Center welcomes you in the hub of superior and noteworthy assignment writing services. 
+          Place your order and get a chance to join the hands of experts for your project submission.
+        </p>
+        
+      </h4>
+    </div>
+  </div>
+  <div class="row bg-dark">
+    <div class="col-sm-8">
+      <div class="p-3 my-3 text-white" >
+        <h2 style="text-align: center;" class="text-success">
+          GET HELP INSTANTLY
+        </h2 >
+        <h5 style="text-align: center;" class="text-muted">
+          Place your order to get best assignment help
+        </h5>
+        <form [formGroup]="angForm" (submit)="saveForm()">
+              <div class="form-group">
+                  <label class="text-secondary col-sm-6">Email:</label>
+                  <input class="form-control" formControlName="email" type="email">
+              </div>
+              <div *ngIf="angForm.controls['email'].invalid && (angForm.controls['email'].dirty || angForm.controls['email'].touched)" class="alert alert-danger">
+                  <div *ngIf="angForm.controls['email'].errors">
+                    Email is invalid.
+                  </div>
+              </div>
+              <div class="form-group">
+                  <label class="text-secondary col-sm-6">Course Code/Subject:</label>
+                  <input class="form-control" formControlName="subject" type="text" placeholder="Eg.UNCC100 Self  & Community">
+              </div>
+              <div *ngIf="angForm.controls['subject'].invalid && (angForm.controls['subject'].dirty || angForm.controls['subject'].touched)" class="alert alert-danger">
+                  <div *ngIf="angForm.controls['subject'].errors.required">
+                    Subject is required.
+                  </div>
+              </div>
+
+              <div class="form-group">
+                <label class="text-secondary col-sm-6">Date</label>   
+                <label class="text-secondary col-sm-6">Time</label>
+                <input type="date" formControlName="date" class="col-sm-6">  
+                <input type="time" formControlName="time" class="col-sm-6" />
+              </div>
+              <div *ngIf="angForm.controls['date'].invalid && (angForm.controls['date'].dirty || angForm.controls['date'].touched)" class="alert alert-danger">
+                <div *ngIf="angForm.controls['date'].errors.required">
+                  Date is required.
+                </div>
+              </div>
+              <button type="submit"
+                  [disabled]="angForm.pristine || angForm.invalid" class="btn btn-success" >
+                  Get Free Quote
+              </button>
+        </form>
+      </div>
+    </div>
+    <div class="container col-md-4" style="color: darkgrey;">
+      <div class="row display-flex">
+          <div class="col-xs-6 col-md-6">
+              <div class="panel panel-default"><div class="panel-body">1 - This is my panel with some content!</div></div>
+          </div>
+          <div class="col-xs-6 col-md-6">
+              <div class="panel panel-default"><div class="panel-body">2 - This is another panel with even more text content!</div></div>
+          </div>
+           <div class="col-xs-6 col-md-6">
+              <div class="panel panel-default"><div class="panel-body">3 - This is a panel with and image<br> </div></div>
+          </div>
+          <div class="col-xs-6 col-md-6">
+              <div class="panel panel-default"><div class="panel-body">4 - This is my panel with some content!</div></div>
+          </div>
+      </div>
+  </div>
+  </div>
+  <div class="container" style="padding-top: 3%;">
+    <h2  style="color: cornflowerblue; text-align: center; padding-top: 3%;">Assignment Help Center Welcomes You </h2>
+    <p class="text-muted" style="text-align: justify;">
+      Here you go friends, you have finally landed up at the right place and this will end up your quest for a 
+      guide and a companion to walk along with you in this crunch and probably the most important juncture of 
+      your career. If at any stage of our association with you, we make you feel that we are merely proving to 
+      be a website for online assignment help then this will be our failure. Once you get associated with us and 
+      whenever you get stuck in any kind of assignment writing related issues, then we would like to believe that 
+      ours is the first name that comes to your mind to take you out of the trouble by online assignment help.
+    </p>
+    <p class="text-muted" style="text-align: center;">
+      It’s needless to say that this is the time which can make or break your career and a good performance in 
+      assignments and most importantly exams can lay a foundation for your good quality of life ahead. No matter 
+      you are pursuing graduation, post-graduation, doctorate or any career-oriented program, a good grade is a 
+      must in order to prove yourself in this highly competitive world where every other student is giving his best 
+      shot to stay ahead in the race.
+    </p>
+  </div>
+</div> 
+ 
