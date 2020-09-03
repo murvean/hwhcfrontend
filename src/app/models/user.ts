@@ -3,6 +3,6 @@ export class User{
       public email:string,
       public encryptedPassword:string
     ){
-  
+
     }
   }

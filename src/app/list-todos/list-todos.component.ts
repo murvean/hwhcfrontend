@@ -38,7 +38,7 @@ export class ListTodosComponent implements OnInit {
 
   refreshTodos(){
     console.log(sessionStorage.getItem((AUTHENTICATED_USER)))
-    this.todoService.retrieveAllAssignments('murvean@gmail.com').subscribe(
+    this.todoService.retrieveAllAssignments(sessionStorage.getItem(AUTHENTICATED_USER)).subscribe(
       response => {
         console.log(response);
         this.assignments = response;

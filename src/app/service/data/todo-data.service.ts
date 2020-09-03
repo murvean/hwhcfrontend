@@ -40,6 +40,22 @@ export class TodoDataService {
               `${TODO_JPA_API_URL}/users/${username}/todos`
                 , todo);
   }
+  createAssignmentAndRegister(assigment){
+    return this.http.post<any>(
+      `${API_URL}/createAssignmentAndRegister`,
+      assigment
+      ).pipe(
+        map(
+          data => {
+            debugger;
+            sessionStorage.setItem(AUTHENTICATED_USER, data.tokenResponseDto.user.email);
+            sessionStorage.setItem(TOKEN, `Bearer ${data.tokenResponseDto.token}`);
+            return data;
+          }
+        )
+      );
+  }
+
   createAssignment(assigment){
     return this.http.post<any>(
       `${API_URL}/createAssignment`,
@@ -47,14 +63,14 @@ export class TodoDataService {
       ).pipe(
         map(
           data => {
-            sessionStorage.setItem(AUTHENTICATED_USER, assigment.owner.email);
-            sessionStorage.setItem(TOKEN, `Bearer ${data.token}`);
+            debugger;
+            console.log(data);
             return data;
           }
         )
       );
   }
 
-  
+
 
 }

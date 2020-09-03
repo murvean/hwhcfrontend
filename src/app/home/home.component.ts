@@ -4,6 +4,10 @@ import { TodoDataService } from '../service/data/todo-data.service';
  import { User } from '../models/user';
 import { Assignment } from '../models/assignments';
 import { Router } from '@angular/router';
+import {AssignmentCreationAndRegisterRequestDto} from '../models/AssignmentCreationAndRegisterRequestDto';
+import {AssignmentBase} from '../models/AssignmentBase';
+import {HardcodedAuthenticationService} from '../service/hardcoded-authentication.service';
+import {AUTHENTICATED_USER} from '../service/basic-authentication.service';
 
 
 
@@ -18,48 +22,76 @@ import { Router } from '@angular/router';
 
 export class HomeComponent implements OnInit {
 
-  assignment = new Assignment(new User('',''),'','','');
+  request = new AssignmentCreationAndRegisterRequestDto(new User('', ''), new AssignmentBase(new User('', ''), '', '', '', '', '', 0));
   angForm: FormGroup;
-  invalidLogin = false
-  
-   constructor(private router: Router,
-    private fb: FormBuilder, 
+  invalidLogin = false;
+
+   constructor(private hardcodedAuthenticationService
+                 : HardcodedAuthenticationService, private router: Router,
+    private fb: FormBuilder,
     private tosoService: TodoDataService) {
     this.createForm();
   }
    createForm() {
-    this.angForm = this.fb.group({
-      email: ['', Validators.compose([
-        Validators.required,
-        Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')
-      ])],
-      subject: ['', Validators.required ],
-      date: ['', Validators.required],
-      time: ['', Validators.required]
-    });
-  }
+    if (this.hardcodedAuthenticationService.isUserLoggedIn()) {
+      this.angForm = this.fb.group({
+        subject: ['', Validators.required ],
+        date: ['', Validators.required],
+        time: ['', Validators.required]
+      });
+    } else {
+      this.angForm = this.fb.group({
+        email: ['', Validators.compose([
+          Validators.required,
+          Validators.pattern('^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$')
+        ])],
+        subject: ['', Validators.required ],
+        date: ['', Validators.required],
+        time: ['', Validators.required]
+      });
+
+    }
+   }
 
   ngOnInit() {
   }
 
-  saveForm(){
-    this.assignment.owner.email = this.angForm.get('email').value
-    this.assignment.subject = this.angForm.get('subject').value
-    this.assignment.deadlineDate = this.angForm.get('date').value
-    this.assignment.deadlineTime = this.angForm.get('time').value
-    console.log(this.assignment)
+  saveForm() {
+     debugger
+    console.log(this.request);
+    this.request.assignment.subject = this.angForm.get('subject').value;
+    this.request.assignment.deadlineDate = this.angForm.get('date').value;
+    this.request.assignment.deadlineTime = this.angForm.get('time').value;
 
-    this.tosoService.createAssignment(this.assignment)
+    if (this.hardcodedAuthenticationService.isUserLoggedIn()) {
+      this.request.assignment.owner.email = sessionStorage.getItem(AUTHENTICATED_USER);
+      this.tosoService.createAssignment(this.request.assignment)
         .subscribe(
           data => {
-            console.log(data)   
-            this.router.navigate(['todos'])
-            this.invalidLogin = false   
+            debugger;
+            this.router.navigate(['todos']);
+            this.invalidLogin = false;
           },
           error => {
-            console.log(error)
-            this.invalidLogin = true
+            console.log(error);
+            this.invalidLogin = true;
           }
-        )
+        );
+    } else {
+      this.request.user.email = this.angForm.get('email').value;
+      this.request.assignment.owner.email = this.angForm.get('email').value;
+      this.tosoService.createAssignmentAndRegister(this.request)
+        .subscribe(
+          data => {
+            debugger;
+            this.router.navigate(['todos']);
+            this.invalidLogin = false;
+          },
+          error => {
+            console.log(error);
+            this.invalidLogin = true;
+          }
+        );
+    }
   }
 }
